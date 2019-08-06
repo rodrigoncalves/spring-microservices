@@ -24,6 +24,6 @@ public class CourseApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        log.info("spring.jpa.datasource.url: " + env.getProperty("spring.jpa.datasource.url"));
+        log.info("spring.datasource.url: " + env.getProperty("spring.datasource.url"));
     }
 }
