@@ -2,6 +2,7 @@ package academy.devdojo.youtube.security.config;
 
 import academy.devdojo.youtube.core.config.JwtConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -26,8 +27,9 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED))
             .and()
             .authorizeRequests()
-                .antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
-                .antMatchers("/course/api/admin/**").hasRole("ADMIN")
+                .antMatchers(jwtConfiguration.getLoginUrl(), "/**/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.GET, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**", "/**/v2/api-docs/**").permitAll()
+                  .antMatchers("/course/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/auth/user/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
     }

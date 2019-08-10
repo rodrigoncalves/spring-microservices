@@ -1,18 +1,14 @@
 package academy.devdojo.youtube.auth.web.rest;
 
 import academy.devdojo.youtube.core.domain.ApplicationUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class UserController {
+@Api("Endpoints to manage information of user")
+public interface UserController {
 
-    @GetMapping("/user/info")
-    public ResponseEntity<ApplicationUser> getUserInfo(UsernamePasswordAuthenticationToken token) {
-        ApplicationUser applicationUser = (ApplicationUser) token.getPrincipal();
-
-        return ResponseEntity.ok(applicationUser);
-    }
+    @ApiOperation(value = "Will retrieve the information from the user available in the token", response = ApplicationUser.class)
+    ResponseEntity<ApplicationUser> getUserInfo(UsernamePasswordAuthenticationToken token);
 }
