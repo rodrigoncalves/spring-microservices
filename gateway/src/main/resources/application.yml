@@ -18,3 +18,8 @@ eureka:
 
 zuul:
   sensitive-headers: Cookie # auth-service
+
+jwt:
+  config:
+    login-url: /auth/login
+    type: signed

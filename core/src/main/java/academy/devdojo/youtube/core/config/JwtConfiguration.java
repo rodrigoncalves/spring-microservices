@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "jwt.config")
 @Getter
+@Setter
 public class JwtConfiguration {
 
     private String loginUrl = "/login/**";

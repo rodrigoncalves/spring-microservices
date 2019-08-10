@@ -22,8 +22,8 @@ import static org.apache.commons.lang3.StringUtils.equalsIgnoreCase;
 @RequiredArgsConstructor
 public class JwtTokenAuthorizationFilter extends OncePerRequestFilter {
 
-    private final JwtConfiguration jwtConfiguration;
-    private final TokenConverter tokenConverter;
+    protected final JwtConfiguration jwtConfiguration;
+    protected final TokenConverter tokenConverter;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
