@@ -25,6 +25,7 @@ public class JwtTokenAuthorizationFilter extends OncePerRequestFilter {
     protected final JwtConfiguration jwtConfiguration;
     protected final TokenConverter tokenConverter;
 
+    @SuppressWarnings("Duplicates")
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
         String header = request.getHeader(jwtConfiguration.getHeader().getName());
@@ -36,8 +37,9 @@ public class JwtTokenAuthorizationFilter extends OncePerRequestFilter {
         }
 
         String token = header.replace(prefix, "").trim();
-        boolean isEncrypted = equalsIgnoreCase("signed", jwtConfiguration.getType());
-        SecurityContextUtil.setSecurityContext(isEncrypted ? validate(token) : decryptAndValidate(token));
+        boolean isSigned = equalsIgnoreCase("signed", jwtConfiguration.getType());
+        SignedJWT signedJWT = isSigned ? validate(token) : decryptAndValidate(token);
+        SecurityContextUtil.setSecurityContext(signedJWT);
 
         chain.doFilter(request, response);
     }
